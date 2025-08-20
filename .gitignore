@@ -12,4 +12,3 @@ venv/
 
 # Data and model artifacts
 /data/raw/
-/models/
