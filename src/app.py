@@ -45,22 +45,17 @@ if st.button("Check out our work!"):
     st.markdown(f"[Check out our work!]({colab_url})", unsafe_allow_html=True)
 
 st.markdown("""
-### How to use this predictor
-1. Open the **Forecast** tab.
+### How to use this forecaster:
+1. Select the **Energy Forecast** tab.
 2. Enter the scenario values (electricity mix, GDP, CO₂, etc.).
 3. Click **Forecast** to generate the per-capita energy estimate.
-4. Tweak inputs to compare scenarios; use **Graph** for map-based exploration.
+4. Tweak inputs to compare scenarios. Use **Global Energy Graph** for map-based exploration.
 
-**Tips**
-- Use realistic ranges (0–100 for percentages; non-negative for TWh).
-- Hover labels for hints (ℹ️), where available.
-- This is a statistical estimate—use it directionally.
-
-**What the result means**
-- **Forecast** = predicted *primary energy consumption per person (kWh/person)*.
+**What the result means:**
+**Forecast** means the predicted *primary energy consumption per person (kWh/person)*.
 
 **Having issues?**
-- Try refreshing. If errors persist, the model or data may be missing from the deploy.
+Try refreshing. If errors persist, the model or data may be missing from the deploy.
 """)
 
 # Tabs for prediction and visualization
