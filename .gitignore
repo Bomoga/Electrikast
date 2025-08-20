@@ -9,6 +9,3 @@ __pycache__/
 # Virtual environments
 venv/
 .env
-
-# Data and model artifacts
-/data/raw/
