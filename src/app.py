@@ -36,13 +36,13 @@ df = load_data()
 
 # Display overview image and title
 if os.path.exists(FIGURE_PATH):
-    st.image(FIGURE_PATH, caption="Energy Data Overview", use_container_width=True)
+    st.image(FIGURE_PATH, caption="Energy Data Chart", use_container_width=True)
 st.title("Energy Consumption Prediction")
 
 # Link to notebook hosted on Colab
 colab_url = "https://colab.research.google.com/github/axk6637/ai4all/blob/main/EnergyUsage.ipynb#scrollTo=4slJU_rhuunD"
 if st.button("Open Colab Notebook"):
-    st.markdown(f"[Click here to open our Colab notebook]({colab_url})", unsafe_allow_html=True)
+    st.markdown(f"[Check out our work!]({colab_url})", unsafe_allow_html=True)
 
 st.write("Adjust the input features and click Predict to see the results.")
 
@@ -50,7 +50,7 @@ st.write("Adjust the input features and click Predict to see the results.")
 tab1, tab2 = st.tabs(["Prediction", "Graph"])
 
 with tab1:
-    st.header("Energy Consumption Prediction")
+    st.header("Electrikast: Energy Forecaster")
     access_electricity_pct = st.number_input("Access to electricity (% of population)", min_value=0.0, max_value=100.0, value=95.0, key="access_electricity_pct")
     access_clean_fuels = st.number_input("Access to clean fuels for cooking", min_value=0.0, max_value=100.0, value=80.0, key="access_clean_fuels")
     renewable_capacity_per_capita = st.number_input("Renewable-electricity-generating-capacity-per-capita", min_value=0.0, value=2.5, key="renewable_capacity_per_capita")
@@ -88,10 +88,10 @@ with tab1:
                                     latitude,
                                     longitude]])
         prediction = model.predict(input_features)[0]
-        st.success(f"XGBoost Prediction: {prediction:.2f}")
+        st.success(f"XGBoost Prediction: {prediction:.2f} kWh per capita.")
 
 with tab2:
-    st.header("World Map Visualization")
+    st.header("Global Energy Map")
     column_name = st.selectbox("Select column to visualize", [
         'Primary energy consumption per capita (kWh/person)',
         'Access to electricity (% of population)',
