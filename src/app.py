@@ -10,7 +10,7 @@ BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 
 # Paths to model, data and figure
 MODEL_PATH = os.path.join(BASE_DIR, "models", "xgboost_model.pkl")
-DATA_PATH = os.path.join(BASE_DIR, "data", "raw", "global_data_on_sustainable_energy.csv")
+DATA_PATH = os.path.join(BASE_DIR, "data", "global_data_on_sustainable_energy.csv")
 FIGURE_PATH = os.path.join(BASE_DIR, "models", "figures", "data.png")
 
 # Load the trained model and dataset

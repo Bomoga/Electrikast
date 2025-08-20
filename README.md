@@ -25,7 +25,7 @@ Fitted a Random Forest Regressor (100 trees, random_state=42), evaluated with MS
 Developed an accompanying Jupyter/Colab notebook for exploratory analysis, correlation studies, model tuning with RandomizedSearchCV, and interactive visualizations using Seaborn and Plotly.
 
 # Data Sources
-`data/raw/global_data_on_sustainable_energy.csv`: compiled global energy, economic, and environmental indicators (3,649 rows × 19 columns) used for model training and evaluation sourced from Kaggle at https://www.kaggle.com/datasets/anshtanwar/global-data-on-sustainable-energy.
+`data/global_data_on_sustainable_energy.csv`: compiled global energy, economic, and environmental indicators (3,649 rows × 19 columns) used for model training and evaluation sourced from Kaggle at https://www.kaggle.com/datasets/anshtanwar/global-data-on-sustainable-energy.
 
 # Technologies Used
 Python, NumPy, pandas
