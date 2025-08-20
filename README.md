@@ -1,4 +1,4 @@
-# https://energyconsumptionpredictor.streamlit.app/
+# https://electrikast.streamlit.app/
 
 # Electrikast
 A machine-learning pipeline that forecasts per‑capita energy usage from economic and environmental indicators, applying data‑wrangling, visualization, and Random Forest/XGBoost techniques in AI4ALL’s Ignite accelerator.
@@ -9,9 +9,9 @@ Reliable energy-usage projections are crucial for policy makers and infrastructu
 # Key Results
 Processed 3,649 country-year records spanning 19 energy and economic variables.
 
-Trained a Random Forest Regressor to predict Energy_per_capita_kWh, reporting RMSE and R² metrics after a train/test split.
+Trained an XGBoost Regressor to predict Energy_per_capita_kWh, reporting MAE (Mean Absolute Error) and R² metrics after a train/test split.
 
-Generated a 2030 per-capita energy forecast for a hypothetical nation to illustrate model deployment.
+Generated a per-capita energy forecast for a hypothetical nation to illustrate model deployment.
 
 Produced feature-importance plots highlighting the most influential drivers of energy consumption.
 
@@ -21,6 +21,8 @@ Cleaned raw CSV data by removing thousands separators and coercing columns to nu
 Dropped rows with missing target values and split data into training and testing subsets.
 
 Fitted a Random Forest Regressor (100 trees, random_state=42), evaluated with MSE, MAE and R², and visualized feature importances via Random Forest and correlation heatmap.
+
+Enhanced an XGBoost Regressor through rigorous hyperparameter tuning, resulting in a considerable 7.4% decrease in MAE compared to its untuned predecessor.
 
 Developed an accompanying Jupyter/Colab notebook for exploratory analysis, correlation studies, model tuning with RandomizedSearchCV, and interactive visualizations using Seaborn and Plotly.
 
