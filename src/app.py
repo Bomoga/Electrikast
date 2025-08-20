@@ -1,21 +1,39 @@
 import streamlit as st
+from pathlib import Path
 import plotly.graph_objects as go
 import pandas as pd
 import joblib
 import numpy as np
 import os
 
-# Determine base directory (two levels up from this file)
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+# -------------------------------------------------
+# Define a fixed project root (two levels up from this file)
+# src/app.py  -> repo root is parents[1]
+ROOT = Path(__file__).resolve().parents[1]
 
-# Paths to model, data and figure
-MODEL_PATH = os.path.join(BASE_DIR, "models", "xgboost_model.pkl")
-DATA_PATH = os.path.join(BASE_DIR, "data", "global-data-on-sustainable-energy.csv")
-FIGURE_PATH = os.path.join(BASE_DIR, "models", "figures", "data.png")
+# Filepaths
+MODEL_PATH = ROOT / "models" / "xgboost_model.pkl"
+DATA_PATH  = ROOT / "data" / "raw" / "global_data_on_sustainable_energy.csv"
+FIGURE_PATH = ROOT / "models" / "figures" / "data.png"
+# -------------------------------------------------
 
-# Load the trained model and dataset
-model = joblib.load(MODEL_PATH)
-df = pd.read_csv(DATA_PATH)
+# Initialize model
+def load_model():
+    if not MODEL_PATH.exists():
+        st.error(f"Model not found at: {MODEL_PATH}")
+        st.stop()
+    return joblib.load(MODEL_PATH)
+
+# Initialize dataset
+def load_data():
+    if not DATA_PATH.exists():
+        st.error(f"Data not found at: {DATA_PATH}")
+        st.stop()
+    return pd.read_csv(DATA_PATH)
+
+# Load once at startup
+model = load_model()
+df = load_data()
 
 # Display overview image and title
 if os.path.exists(FIGURE_PATH):
