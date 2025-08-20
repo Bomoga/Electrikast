@@ -41,7 +41,7 @@ st.title("Electrikast: Energy Forecaster")
 
 # Link to notebook hosted on Colab
 colab_url = "https://colab.research.google.com/github/axk6637/ai4all/blob/main/EnergyUsage.ipynb#scrollTo=4slJU_rhuunD"
-if st.button("Open"):
+if st.button("Check out our work!"):
     st.markdown(f"[Check out our work!]({colab_url})", unsafe_allow_html=True)
 
 st.write("Adjust the input features and select 'Forecast' to see the results.")
