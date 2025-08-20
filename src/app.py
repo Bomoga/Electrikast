@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 # Filepaths
 MODEL_PATH = ROOT / "models" / "xgboost_model.pkl"
-DATA_PATH  = ROOT / "data" / "raw" / "global_data_on_sustainable_energy.csv"
+DATA_PATH  = ROOT / "data" / "global-data-on-sustainable-energy.csv"
 FIGURE_PATH = ROOT / "models" / "figures" / "data.png"
 
 # Initialize model
