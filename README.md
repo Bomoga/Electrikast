@@ -1,7 +1,7 @@
 # https://energyconsumptionpredictor.streamlit.app/
 
-# Energy Consumption (Per Capita) Predictor
-Built a machine-learning pipeline that estimates per‑capita energy usage from economic and environmental indicators, applying data‑wrangling, visualization, and Random Forest/XGBoost techniques in AI4ALL’s cutting-edge Ignite accelerator.
+# Electrikast
+A machine-learning pipeline that forecasts per‑capita energy usage from economic and environmental indicators, applying data‑wrangling, visualization, and Random Forest/XGBoost techniques in AI4ALL’s Ignite accelerator.
 
 # Problem Statement
 Reliable energy-usage projections are crucial for policy makers and infrastructure planners, yet many countries lack forward-looking estimates. This project explores historical global data to model future per-capita consumption, informing sustainable development strategies.
