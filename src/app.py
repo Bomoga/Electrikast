@@ -37,20 +37,20 @@ df = load_data()
 # Display overview image and title
 if os.path.exists(FIGURE_PATH):
     st.image(FIGURE_PATH, caption="Energy Data Chart", use_container_width=True)
-st.title("Energy Consumption Prediction")
+st.title("Electrikast: Energy Forecaster")
 
 # Link to notebook hosted on Colab
 colab_url = "https://colab.research.google.com/github/axk6637/ai4all/blob/main/EnergyUsage.ipynb#scrollTo=4slJU_rhuunD"
-if st.button("Open Colab Notebook"):
+if st.button("Open"):
     st.markdown(f"[Check out our work!]({colab_url})", unsafe_allow_html=True)
 
-st.write("Adjust the input features and click Predict to see the results.")
+st.write("Adjust the input features and select 'Forecast' to see the results.")
 
 # Tabs for prediction and visualization
-tab1, tab2 = st.tabs(["Prediction", "Graph"])
+tab1, tab2 = st.tabs(["Energy Forecaster", "Global Energy Graph"])
 
 with tab1:
-    st.header("Electrikast: Energy Forecaster")
+    st.header("Feature Input")
     access_electricity_pct = st.number_input("Access to electricity (% of population)", min_value=0.0, max_value=100.0, value=95.0, key="access_electricity_pct")
     access_clean_fuels = st.number_input("Access to clean fuels for cooking", min_value=0.0, max_value=100.0, value=80.0, key="access_clean_fuels")
     renewable_capacity_per_capita = st.number_input("Renewable-electricity-generating-capacity-per-capita", min_value=0.0, value=2.5, key="renewable_capacity_per_capita")
@@ -69,7 +69,7 @@ with tab1:
     latitude = st.number_input("Latitude", min_value=-90.0, max_value=90.0, value=0.0, key="latitude")
     longitude = st.number_input("Longitude", min_value=-180.0, max_value=180.0, value=0.0, key="longitude")
 
-    if st.button("Predict"):
+    if st.button("Forecast"):
         input_features = np.array([[access_electricity_pct,
                                     access_clean_fuels,
                                     renewable_capacity_per_capita,
