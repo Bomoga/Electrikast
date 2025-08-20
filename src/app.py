@@ -63,23 +63,90 @@ tab1, tab2 = st.tabs(["Energy Forecaster", "Global Energy Graph"])
 
 with tab1:
     st.header("Feature Input")
-    access_electricity_pct = st.number_input("Access to electricity (% of population)", min_value=0.0, max_value=100.0, value=95.0, key="access_electricity_pct")
-    access_clean_fuels = st.number_input("Access to clean fuels for cooking", min_value=0.0, max_value=100.0, value=80.0, key="access_clean_fuels")
-    renewable_capacity_per_capita = st.number_input("Renewable-electricity-generating-capacity-per-capita", min_value=0.0, value=2.5, key="renewable_capacity_per_capita")
-    renewable_share_pct = st.number_input("Renewable energy share in the total final energy consumption (%)", min_value=0.0, max_value=100.0, value=30.0, key="renewable_share_pct")
-    electricity_fossil_twh = st.number_input("Electricity from fossil fuels (TWh)", min_value=0.0, value=250.0, key="electricity_fossil_twh")
-    electricity_nuclear_twh = st.number_input("Electricity from nuclear (TWh)", min_value=0.0, value=10.0, key="electricity_nuclear_twh")
-    electricity_renewable_twh = st.number_input("Electricity from renewables (TWh)", min_value=0.0, value=150.0, key="electricity_renewable_twh")
-    low_carbon_electricity_pct = st.number_input("Low-carbon electricity (% electricity)", min_value=0.0, max_value=100.0, value=60.0, key="low_carbon_electricity_pct")
-    energy_intensity = st.number_input("Energy intensity level of primary energy (MJ/$2017 PPP GDP)", min_value=0.0, value=1.2, key="energy_intensity")
-    co2_kt = st.number_input("Value_co2_emissions_kt_by_country", min_value=0.0, value=100000.0, key="co2_kt")
-    renewables_equiv_primary_energy = st.number_input("Renewables (% equivalent primary energy)", min_value=0.0, max_value=100.0, value=20.0, key="renewables_equiv_primary_energy")
-    gdp_growth = st.number_input("gdp_growth", min_value=0.0, max_value=100.0, value=2.5, key="gdp_growth")
-    gdp_per_capita = st.number_input("gdp_per_capita", min_value=0.0, value=16000.0, key="gdp_per_capita")
-    density_p_km2 = st.number_input("Density (P/Km2)", min_value=0.0, value=150.0, key="density_p_km2")
-    land_area_km2 = st.number_input("Land Area(Km2)", min_value=0.0, value=700000.0, key="land_area_km2")
-    latitude = st.number_input("Latitude", min_value=-90.0, max_value=90.0, value=0.0, key="latitude")
-    longitude = st.number_input("Longitude", min_value=-180.0, max_value=180.0, value=0.0, key="longitude")
+    access_electricity_pct = st.number_input(
+        "Access to Electricity (% of population)",
+        min_value=0.0, max_value=100.0, value=95.0, key="access_electricity_pct"
+    )
+
+    access_clean_fuels = st.number_input(
+        "Access to Clean Fuels for Cooking (% of population)",
+        min_value=0.0, max_value=100.0, value=80.0, key="access_clean_fuels"
+    )
+
+    renewable_capacity_per_capita = st.number_input(
+        "Renewable Electricity Capacity per Person (kW per capita)",
+        min_value=0.0, value=2.5, key="renewable_capacity_per_capita"
+    )
+
+    renewable_share_pct = st.number_input(
+        "Renewable Energy Share in Final Consumption (%)",
+        min_value=0.0, max_value=100.0, value=30.0, key="renewable_share_pct"
+    )
+
+    electricity_fossil_twh = st.number_input(
+        "Electricity Generated from Fossil Fuels (TWh)",
+        min_value=0.0, value=250.0, key="electricity_fossil_twh"
+    )
+
+    electricity_nuclear_twh = st.number_input(
+        "Electricity Generated from Nuclear (TWh)",
+        min_value=0.0, value=10.0, key="electricity_nuclear_twh"
+    )
+
+    electricity_renewable_twh = st.number_input(
+        "Electricity Generated from Renewables (TWh)",
+        min_value=0.0, value=150.0, key="electricity_renewable_twh"
+    )
+
+    low_carbon_electricity_pct = st.number_input(
+        "Low-Carbon Electricity (% of total electricity)",
+        min_value=0.0, max_value=100.0, value=60.0, key="low_carbon_electricity_pct"
+    )
+
+    energy_intensity = st.number_input(
+        "Energy Intensity (MJ per $2017 PPP GDP)",
+        min_value=0.0, value=1.2, key="energy_intensity"
+    )
+
+    co2_kt = st.number_input(
+        "CO₂ Emissions (kilotonnes per year)",
+        min_value=0.0, value=100000.0, key="co2_kt"
+    )
+
+    renewables_equiv_primary_energy = st.number_input(
+        "Renewables Share of Primary Energy (%)",
+        min_value=0.0, max_value=100.0, value=20.0, key="renewables_equiv_primary_energy"
+    )
+
+    gdp_growth = st.number_input(
+        "GDP Growth Rate (%)",
+        min_value=0.0, max_value=100.0, value=2.5, key="gdp_growth"
+    )
+
+    gdp_per_capita = st.number_input(
+        "GDP per Capita (USD, PPP adjusted)",
+        min_value=0.0, value=16000.0, key="gdp_per_capita"
+    )
+
+    density_p_km2 = st.number_input(
+        "Population Density (people per km²)",
+        min_value=0.0, value=150.0, key="density_p_km2"
+    )
+
+    land_area_km2 = st.number_input(
+        "Land Area (km²)",
+        min_value=0.0, value=700000.0, key="land_area_km2"
+    )
+
+    latitude = st.number_input(
+        "Latitude (degrees)",
+        min_value=-90.0, max_value=90.0, value=0.0, key="latitude"
+    )
+
+    longitude = st.number_input(
+        "Longitude (degrees)",
+        min_value=-180.0, max_value=180.0, value=0.0, key="longitude"
+    )
 
     if st.button("Forecast"):
         input_features = np.array([[access_electricity_pct,
