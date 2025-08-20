@@ -36,7 +36,7 @@ df = load_data()
 
 # Display overview image and title
 if os.path.exists(FIGURE_PATH):
-    st.image(FIGURE_PATH, caption="Energy Data Chart", use_container_width=True)
+    st.image(FIGURE_PATH, use_container_width=True)
 st.title("Electrikast: Energy Forecaster")
 
 # Link to notebook hosted on Colab
