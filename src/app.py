@@ -1,0 +1,109 @@
+import streamlit as st
+import plotly.graph_objects as go
+import pandas as pd
+import joblib
+import numpy as np
+import os
+
+# Determine base directory (two levels up from this file)
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+
+# Paths to model, data and figure
+MODEL_PATH = os.path.join(BASE_DIR, "models", "xgboost_model.pkl")
+DATA_PATH = os.path.join(BASE_DIR, "data", "raw", "global_data_on_sustainable_energy.csv")
+FIGURE_PATH = os.path.join(BASE_DIR, "models", "figures", "data.png")
+
+# Load the trained model and dataset
+model = joblib.load(MODEL_PATH)
+df = pd.read_csv(DATA_PATH)
+
+# Display overview image and title
+if os.path.exists(FIGURE_PATH):
+    st.image(FIGURE_PATH, caption="Energy Data Overview", use_container_width=True)
+st.title("Energy Consumption Prediction")
+
+# Link to notebook hosted on Colab
+colab_url = "https://colab.research.google.com/github/axk6637/ai4all/blob/main/EnergyUsage.ipynb#scrollTo=4slJU_rhuunD"
+if st.button("Open Colab Notebook"):
+    st.markdown(f"[Click here to open our Colab notebook]({colab_url})", unsafe_allow_html=True)
+
+st.write("Adjust the input features and click Predict to see the results.")
+
+# Tabs for prediction and visualization
+tab1, tab2 = st.tabs(["Prediction", "Graph"])
+
+with tab1:
+    st.header("Energy Consumption Prediction")
+    access_electricity_pct = st.number_input("Access to electricity (% of population)", min_value=0.0, max_value=100.0, value=95.0, key="access_electricity_pct")
+    access_clean_fuels = st.number_input("Access to clean fuels for cooking", min_value=0.0, max_value=100.0, value=80.0, key="access_clean_fuels")
+    renewable_capacity_per_capita = st.number_input("Renewable-electricity-generating-capacity-per-capita", min_value=0.0, value=2.5, key="renewable_capacity_per_capita")
+    renewable_share_pct = st.number_input("Renewable energy share in the total final energy consumption (%)", min_value=0.0, max_value=100.0, value=30.0, key="renewable_share_pct")
+    electricity_fossil_twh = st.number_input("Electricity from fossil fuels (TWh)", min_value=0.0, value=250.0, key="electricity_fossil_twh")
+    electricity_nuclear_twh = st.number_input("Electricity from nuclear (TWh)", min_value=0.0, value=10.0, key="electricity_nuclear_twh")
+    electricity_renewable_twh = st.number_input("Electricity from renewables (TWh)", min_value=0.0, value=150.0, key="electricity_renewable_twh")
+    low_carbon_electricity_pct = st.number_input("Low-carbon electricity (% electricity)", min_value=0.0, max_value=100.0, value=60.0, key="low_carbon_electricity_pct")
+    energy_intensity = st.number_input("Energy intensity level of primary energy (MJ/$2017 PPP GDP)", min_value=0.0, value=1.2, key="energy_intensity")
+    co2_kt = st.number_input("Value_co2_emissions_kt_by_country", min_value=0.0, value=100000.0, key="co2_kt")
+    renewables_equiv_primary_energy = st.number_input("Renewables (% equivalent primary energy)", min_value=0.0, max_value=100.0, value=20.0, key="renewables_equiv_primary_energy")
+    gdp_growth = st.number_input("gdp_growth", min_value=0.0, max_value=100.0, value=2.5, key="gdp_growth")
+    gdp_per_capita = st.number_input("gdp_per_capita", min_value=0.0, value=16000.0, key="gdp_per_capita")
+    density_p_km2 = st.number_input("Density (P/Km2)", min_value=0.0, value=150.0, key="density_p_km2")
+    land_area_km2 = st.number_input("Land Area(Km2)", min_value=0.0, value=700000.0, key="land_area_km2")
+    latitude = st.number_input("Latitude", min_value=-90.0, max_value=90.0, value=0.0, key="latitude")
+    longitude = st.number_input("Longitude", min_value=-180.0, max_value=180.0, value=0.0, key="longitude")
+
+    if st.button("Predict"):
+        input_features = np.array([[access_electricity_pct,
+                                    access_clean_fuels,
+                                    renewable_capacity_per_capita,
+                                    renewable_share_pct,
+                                    electricity_fossil_twh,
+                                    electricity_nuclear_twh,
+                                    electricity_renewable_twh,
+                                    low_carbon_electricity_pct,
+                                    energy_intensity,
+                                    co2_kt,
+                                    renewables_equiv_primary_energy,
+                                    gdp_growth,
+                                    gdp_per_capita,
+                                    density_p_km2,
+                                    land_area_km2,
+                                    latitude,
+                                    longitude]])
+        prediction = model.predict(input_features)[0]
+        st.success(f"XGBoost Prediction: {prediction:.2f}")
+
+with tab2:
+    st.header("World Map Visualization")
+    column_name = st.selectbox("Select column to visualize", [
+        'Primary energy consumption per capita (kWh/person)',
+        'Access to electricity (% of population)',
+        'Renewable energy share in the total final energy consumption (%)',
+        'Low-carbon electricity (% electricity)',
+        'Value_co2_emissions_kt_by_country',
+        'Renewables (% equivalent primary energy)',
+        'gdp_growth',
+        'gdp_per_capita',
+    ])
+    years = sorted(df['Year'].unique())
+    selected_year = st.slider("Select Year", min_value=int(years[0]), max_value=int(years[-1]), value=int(years[0]))
+    filtered_df = df[df['Year'] == selected_year]
+
+    fig = go.Figure(go.Choropleth(
+        locations=filtered_df['Entity'],
+        z=filtered_df[column_name],
+        locationmode='country names',
+        colorscale='Cividis',
+        colorbar=dict(title=column_name),
+        zmin=df[column_name].min(),
+        zmax=df[column_name].max(),
+    ))
+    fig.update_layout(
+        title_text=f'{column_name} Map - {selected_year}',
+        geo=dict(showframe=True, showcoastlines=True, projection_type='natural earth'),
+        height=400,
+        width=800,
+        font=dict(family='Arial', size=12),
+        margin=dict(t=80, l=50, r=50, b=50),
+    )
+    st.plotly_chart(fig, use_container_width=True)

@@ -1,0 +1,6 @@
+# Ignore datasets and notebooks in docker build
+*.csv
+*.pkl
+*.ipynb
+
+__pycache__/
