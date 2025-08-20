@@ -52,10 +52,10 @@ st.markdown("""
 4. Tweak inputs to compare scenarios. Use **Global Energy Graph** for map-based exploration.
 
 **What the result means:**
-**Forecast** means the predicted *primary energy consumption per person (kWh/person)*.
+- **Forecast** means the predicted *primary energy consumption per person (kWh/person)*.
 
 **Having issues?**
-Try refreshing. If errors persist, the model or data may be missing from the deploy.
+- Try refreshing. If errors persist, the model or data may be missing from the deploy.
 """)
 
 # Tabs for prediction and visualization
