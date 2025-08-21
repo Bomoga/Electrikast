@@ -175,6 +175,7 @@ with tab1:
             "longitude": longitude,
         }
         
+        predictor.validate(inputs)
         prediction = predictor.predict(inputs, MODEL_PATH)
         st.success(f"XGBoost Prediction: {prediction:.2f} kWh per capita.")
 
