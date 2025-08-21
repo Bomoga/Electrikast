@@ -175,7 +175,7 @@ with tab1:
         }
         
         predictor.validate(inputs)
-        prediction = predictor.predict(inputs, MODEL_PATH)
+        prediction = predictor.predict(inputs)
         st.success(f"XGBoost Prediction: {prediction:.2f} kWh per capita.")
 
 with tab2:
