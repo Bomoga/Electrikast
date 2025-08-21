@@ -5,6 +5,9 @@ import pandas as pd
 import joblib
 import numpy as np
 import os
+from predict import EnergyPredictor
+from predict import predict
+
 
 # -------------------------------------------------
 # Define a fixed project root (two levels up from this file)
@@ -15,6 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 MODEL_PATH = ROOT / "models" / "xgboost_model.pkl"
 DATA_PATH  = ROOT / "data" / "global-data-on-sustainable-energy.csv"
 FIGURE_PATH = ROOT / "models" / "figures" / "globalenergyimage.jpg"
+FEATURE_ORDER_PATH = ROOT / "data" / "feature_order.json"
 
 # Initialize model
 def load_model():
@@ -33,6 +37,8 @@ def load_data():
 # Load once at startup
 model = load_model()
 df = load_data()
+
+predictor = EnergyPredictor(MODEL_PATH, FEATURE_ORDER_PATH)
 
 # Display overview image and title
 if os.path.exists(FIGURE_PATH):
@@ -149,24 +155,27 @@ with tab1:
     )
 
     if st.button("Forecast"):
-        input_features = np.array([[access_electricity_pct,
-                                    access_clean_fuels,
-                                    renewable_capacity_per_capita,
-                                    renewable_share_pct,
-                                    electricity_fossil_twh,
-                                    electricity_nuclear_twh,
-                                    electricity_renewable_twh,
-                                    low_carbon_electricity_pct,
-                                    energy_intensity,
-                                    co2_kt,
-                                    renewables_equiv_primary_energy,
-                                    gdp_growth,
-                                    gdp_per_capita,
-                                    density_p_km2,
-                                    land_area_km2,
-                                    latitude,
-                                    longitude]])
-        prediction = model.predict(input_features)[0]
+        inputs = {
+            "access_electricity_pct": access_electricity_pct,
+            "access_clean_fuels": access_clean_fuels,
+            "renewable_capacity_per_capita": renewable_capacity_per_capita,
+            "renewable_share_pct": renewable_share_pct,
+            "electricity_fossil_twh": electricity_fossil_twh,
+            "electricity_nuclear_twh": electricity_nuclear_twh,
+            "electricity_renewable_twh": electricity_renewable_twh,
+            "low_carbon_electricity_pct": low_carbon_electricity_pct,
+            "energy_intensity": energy_intensity,
+            "co2_kt": co2_kt,
+            "renewables_equiv_primary_energy": renewables_equiv_primary_energy,
+            "gdp_growth": gdp_growth,
+            "gdp_per_capita": gdp_per_capita,
+            "density_p_km2": density_p_km2,
+            "land_area_km2": land_area_km2,
+            "latitude": latitude,
+            "longitude": longitude,
+        }
+        
+        prediction = predictor.predict(inputs, MODEL_PATH)
         st.success(f"XGBoost Prediction: {prediction:.2f} kWh per capita.")
 
 with tab2:

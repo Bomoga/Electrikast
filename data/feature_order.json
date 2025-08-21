@@ -1,0 +1,19 @@
+[
+  "access_electricity_pct",
+  "access_clean_fuels",
+  "renewable_capacity_per_capita",
+  "renewable_share_pct",
+  "electricity_fossil_twh",
+  "electricity_nuclear_twh",
+  "electricity_renewable_twh",
+  "low_carbon_electricity_pct",
+  "energy_intensity",
+  "co2_kt",
+  "renewables_equiv_primary_energy",
+  "gdp_growth",
+  "gdp_per_capita",
+  "density_p_km2",
+  "land_area_km2",
+  "latitude",
+  "longitude"
+]
