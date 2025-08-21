@@ -2,6 +2,7 @@ from pathlib import Path
 import json
 import numpy as np
 import joblib
+import json
 
 class EnergyPredictor:
     def __init__(self, model_path: str, feature_order_path: str):
@@ -14,7 +15,7 @@ class EnergyPredictor:
             raise FileNotFoundError(f"Feature order file not found at {self.feature_order_path}")
         
         self.model = joblib.load(self.model_path)
-        self.feature_order_path = joblib.load(self.feature_order_path)
+        self.feature_order_path = json.loads(self.feature_order_path.read_text)
 
     def validate(self, inputs: dict):
         if not isinstance(inputs, dict):
