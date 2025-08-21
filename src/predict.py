@@ -27,6 +27,6 @@ class EnergyPredictor:
         return np.array([[inputs[f] for f in self.features]], dtype = float)
     
     def predict(self, inputs: dict) -> float:
-        x = self.validate_inputs(inputs)
+        x = self.validate(inputs)
         y = self.model.predict(x)
         return float(y[0])
