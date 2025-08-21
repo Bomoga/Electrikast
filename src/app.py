@@ -6,7 +6,6 @@ import joblib
 import numpy as np
 import os
 from predict import EnergyPredictor
-from predict import predict
 
 
 # -------------------------------------------------
