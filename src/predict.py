@@ -15,7 +15,7 @@ class EnergyPredictor:
             raise FileNotFoundError(f"Feature order file not found at {self.feature_order_path}")
         
         self.model = joblib.load(self.model_path)
-        self.features = json.loads(self.feature_order_path.read_text)
+        self.features = json.loads(self.feature_order_path.read_text())
 
     def validate(self, inputs: dict):
         if not isinstance(inputs, dict):
