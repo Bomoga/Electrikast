@@ -48,4 +48,5 @@ class EnergyPredictor:
     def predict(self, inputs: dict) -> float:
         x = self.validate(inputs)
         y = self.model.predict(x)
-        return float(y[0])
+        val = y[0] if np.ndim == 1 else y[0][0]
+        return float(val)
