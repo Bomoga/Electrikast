@@ -27,7 +27,7 @@ class EnergyPredictor:
         
         if not isinstance(self.features, list) or not all(isinstance(f, str) for f in self.features):
             raise ValueError(f"feature_order.json must be a JSON array of strings. Caught: {type(self.features)}")
-        if len(self.features == 0):
+        if len(self.features) == 0:
             raise ValueError("feature_order.json is empty. At minimum one feature is expected.")
         
     def validate(self, inputs: dict):
