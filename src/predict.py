@@ -6,6 +6,7 @@ import json
 
 class EnergyPredictor:
     def __init__(self, model_path: str, feature_order_path: str):
+        self.features = []
         self.model_path = Path(model_path)
         self.feature_order_path = Path(feature_order_path)
 
