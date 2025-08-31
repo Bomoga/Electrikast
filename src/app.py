@@ -195,7 +195,7 @@ with tab2:
     filtered_df = df[df['Year'] == selected_year]
 
     fig = go.Figure(go.Choropleth(
-        locations=filtered_df['Entity'],
+        locations=filtered_df['Country'],
         z=filtered_df[column_name],
         locationmode='country names',
         colorscale='Cividis',
