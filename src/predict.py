@@ -2,7 +2,6 @@ from pathlib import Path
 import json
 import numpy as np
 import joblib
-import json
 
 class EnergyPredictor:
     def __init__(self, model_path: str, feature_order_path: str):
@@ -17,13 +16,13 @@ class EnergyPredictor:
         try:
             self.model = joblib.load(self.model_path)
         except Exception as e:
-            raise RuntimeError("Failed to load model at {self.model_path}: {e}") from e
+            raise RuntimeError(f"Failed to load model at {self.model_path}: {e}") from e
         
         try:
             raw = self.feature_order_path.read_text(encoding="utf-8")
             self.features = json.loads(raw)
         except Exception as e:
-            raise RuntimeError("Failed to parse JSON from {self.feature_order_path}: {e}") from e
+            raise RuntimeError(f"Failed to parse JSON from {self.feature_order_path}: {e}") from e
         
         if not isinstance(self.features, list) or not all(isinstance(f, str) for f in self.features):
             raise ValueError(f"feature_order.json must be a JSON array of strings. Caught: {type(self.features)}")
@@ -39,14 +38,16 @@ class EnergyPredictor:
             raise ValueError(f"Missing required features: {missing}")
         
         try:
-            row = [float(inputs[i] for i in self.features)]
+            row = [float(inputs[i]) for i in self.features]
         except Exception as e:
-            raise ValueError("All values must be numeric. Failed to convert one or more values: {e}")
-        
-        return np.array([[row]], dtype = float)
+            raise ValueError(f"All values must be numeric. Failed to convert one or more values: {e}")
+
+        # Shape: (1, n_features)
+        return np.array([row], dtype=float)
     
     def predict(self, inputs: dict) -> float:
         x = self.validate(inputs)
         y = self.model.predict(x)
-        val = y[0] if np.ndim == 1 else y[0][0]
-        return float(val)
+        # Robustly extract scalar from (n,) or (n,1)
+        y = np.asarray(y)
+        return float(np.ravel(y)[0])
