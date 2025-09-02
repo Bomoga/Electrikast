@@ -3,6 +3,7 @@ import json
 import numpy as np
 import joblib
 
+
 class EnergyPredictor:
     def __init__(self, model_path: str, feature_order_path: str):
         self.model_path = Path(model_path)
@@ -31,23 +32,21 @@ class EnergyPredictor:
         
     def validate(self, inputs: dict):
         if not isinstance(inputs, dict):
-            raise ValueError("Inputs must be provided as a dictionary of {feature_name: value}")
+            raise ValueError(f"Inputs must be provided as a dictionary of {feature_name: value}")
         
         missing = [f for f in self.features if f not in inputs]
         if missing:
             raise ValueError(f"Missing required features: {missing}")
         
         try:
-            row = [float(inputs[i]) for i in self.features]
+            row = [float(inputs[i] for i in self.features)]
         except Exception as e:
             raise ValueError(f"All values must be numeric. Failed to convert one or more values: {e}")
-
-        # Shape: (1, n_features)
-        return np.array([row], dtype=float)
+        
+        return np.array([[row]], dtype = float)
     
     def predict(self, inputs: dict) -> float:
         x = self.validate(inputs)
         y = self.model.predict(x)
-        # Robustly extract scalar from (n,) or (n,1)
         y = np.asarray(y)
         return float(np.ravel(y)[0])
